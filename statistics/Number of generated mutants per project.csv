@@ -1,0 +1,15 @@
+Project,InvertNegsMutator,ReturnValsMutator,ConditionalsBoundaryMutator,VoidMethodCallMutator,IncrementsMutator,NegateConditionalsMutator,MathMutator,TotalofMutants
+BCEL,0,1739,539,2725,186,2531,418,8138
+CLI,0,222,35,117,8,341,27,750
+Codec,0,748,227,307,159,975,944,3360
+CSV,0,175,30,62,12,282,50,611
+Email,0,191,21,117,5,233,14,581
+FileUpload,0,176,37,83,22,223,71,612
+Imaging,12,1952,1033,1408,404,3018,3748,11575
+Lang,20,3929,1350,996,431,4728,1600,13054
+Statistics,35,384,203,0,5,265,652,1544
+Validator,0,728,234,108,34,815,87,2006
+TotalofMutants,67,10244,3709,5923,1266,13411,7611,42231
+,,,,,,,,
+All projects,InvertNegsMutator,ReturnValsMutator,ConditionalsBoundaryMutator,VoidMethodCallMutator,IncrementsMutator,NegateConditionalsMutator,MathMutator,Total
+Gerados por PIT,0.16%,24.26%,8.78%,14.03%,3.00%,31.76%,18.02%,100.00%
