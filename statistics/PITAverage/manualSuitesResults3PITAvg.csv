@@ -1,0 +1,2 @@
+MutationCoverage,InvertNegsMutator,ReturnValsMutator,ConditionalsBoundaryMutator,IncrementsMutator,NegateConditionalsMutator,MathMutator,LineCoverage,Project,Tool
+0.879727979274611,0.911428571428571,0.821614583333333,0.71871921182266,1,0.967169811320755,0.925920245398773,0.922879177,statistics,manual
