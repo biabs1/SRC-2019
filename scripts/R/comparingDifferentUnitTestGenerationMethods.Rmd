@@ -1,0 +1,174 @@
+---
+title: "Comparing  Different  Unit  Test  Generation Methods Through Different  Mutation  Operators"
+output:
+  html_document: default
+  pdf_document: default
+---
+
+## Installing and loading packages
+```{r}
+install.packages("ggpubr")
+install.packages("ggplot2")
+install.packages("reshape")
+install.packages("reshape2")
+install.packages("dplyr")
+library("ggplot2")
+library("reshape")
+library("reshape2")
+library("ggpubr")
+library("dplyr")
+```
+
+## Reading data
+```{r}
+evoResults1 <- read.csv('/home/beatriz/Desktop/FinaldataSet/evoResultsEvoAvg.csv', sep = ",", header = TRUE)
+evoResults2 <- read.csv('/home/beatriz/Desktop/FinaldataSet/evoResults2EvoAvg.csv', sep = ",", header = TRUE)
+evoResults3 <- read.csv('/home/beatriz/Desktop/FinaldataSet/evoResults3EvoAvg.csv', sep = ",", header = TRUE)
+
+randoopResults1 <- read.csv('/home/beatriz/Desktop/FinaldataSet/randoopResultsRandoopAvg.csv', sep = ",", header = TRUE)
+randoopResults2 <- read.csv('/home/beatriz/Desktop/FinaldataSet/randoopResults2RandoopAvg.csv', sep = ",", header = TRUE)
+randoopResults3 <- read.csv('/home/beatriz/Desktop/FinaldataSet/randoopResults3RandoopAvg.csv', sep = ",", header = TRUE)
+
+manualResults1 <- read.csv('/home/beatriz/Desktop/FinaldataSet/manualSuitesResultsPITAvg.csv', sep = ",", header = TRUE)
+manualResults2 <- read.csv('/home/beatriz/Desktop/FinaldataSet/manualSuitesResults2PITAvg.csv', sep = ",", header = TRUE)
+manualResults3 <- read.csv('/home/beatriz/Desktop/FinaldataSet/manualSuitesResults3PITAvg.csv', sep = ",", header = TRUE)
+```
+
+## Merging data
+```{r}
+evoResults12 <- merge(evoResults1, evoResults2, all = TRUE)
+#evo12
+evoResults123 <- merge(evoResults12, evoResults3, all = TRUE)
+evoResults123
+
+randoopResults12 <- merge(randoopResults1, randoopResults2, all = TRUE)
+#randoopResults12
+randoopResults123 <- merge(randoopResults12, randoopResults3, all = TRUE)
+#randoopResults123
+
+manualResults12 <- merge(manualResults1, manualResults2, all = TRUE)
+#manualResults12
+manualResults123 <- merge(manualResults12, manualResults3, all = TRUE)
+manualResults123
+
+evoAndRandoopDataSet <- merge(evoResults123, randoopResults123, all = TRUE)
+completeDataSet <- merge(evoAndRandoopDataSet, manualResults123, all = TRUE)
+#completeDataSet
+```
+
+## Declaring common values
+```{r}
+metrics1 = c("LineCoverage","MutationCoverage")
+metrics2 = c("ReturnValsMutator","ConditionalsBoundaryMutator",
+             "VoidMethodCallMutator","IncrementsMutator",
+             "NegateConditionalsMutator","MathMutator", "InvertNegsMutator")
+
+projects=c("BCEL","CLI","Codec", "CSV", "Email", "FileUpload", "Imaging", "Lang", "Statistics", "Validator")
+```
+
+## Melting data
+```{r}
+completeDataSet.m1 <- melt(completeDataSet, id.var = "Tool", measure.vars = metrics1)
+#completeDataSet.m1
+
+completeDataSet.m2 <- melt(completeDataSet, id.var = "Tool", measure.vars = metrics2)
+#completeDataSet.m2
+
+completeDataSet.m3 <- melt(completeDataSet, id.vars = c("Tool", "Project"))
+#completeDataSet.m3
+```
+
+## Casting data
+```{r}
+completeDataSet.c1 <- cast(completeDataSet.m3, Tool~variable+Project)
+completeDataSet.c1
+```
+
+## Ploting Box-plots
+# Line Coverage and Mutation Coverage
+```{r}
+ggplot(data = completeDataSet.m1, aes(x=variable, y=value)) +
+  geom_boxplot(aes(fill=Tool)) +
+  scale_x_discrete(labels= c("LineCoverage", "MutationCoverage"))
+```
+
+# PIT's Default Mutation Operators
+```{r}
+ggplot(data = completeDataSet.m2, aes(x=variable, y=value)) +
+  geom_boxplot(aes(fill=Tool)) +
+  scale_x_discrete(labels= c(
+             "RVM","CBM",
+             "VMCM","IM",
+             "NCM","MM", "INM"))
+```
+
+## Comparing Line Coverage per Tool
+```{r}
+wilcox.test(evoResults123$LineCoverage, randoopResults123$LineCoverage, paired = TRUE)
+wilcox.test(evoResults123$LineCoverage, manualResults123$LineCoverage, paired = TRUE)
+wilcox.test(randoopResults123$LineCoverage, manualResults123$LineCoverage, paired = TRUE)
+```
+
+## Comparing Mutation Coverage per Tool
+```{r}
+wilcox.test(evoResults123$MutationCoverage, randoopResults123$MutationCoverage, paired = TRUE)
+wilcox.test(evoResults123$MutationCoverage, manualResults123$MutationCoverage, paired = TRUE)
+wilcox.test(randoopResults123$MutationCoverage, manualResults123$MutationCoverage, paired = TRUE)
+```
+
+## Comparing ReturnValsMutator Coverage per Tool
+```{r}
+wilcox.test(evoResults123$ReturnValsMutator, randoopResults123$ReturnValsMutator, paired = TRUE)
+wilcox.test(evoResults123$ReturnValsMutator, manualResults123$ReturnValsMutator, paired = TRUE)
+wilcox.test(randoopResults123$ReturnValsMutator, manualResults123$ReturnValsMutator, paired = TRUE)
+```
+
+## Comparing ConditionalsBoundaryMutator Coverage per Tool
+```{r}
+wilcox.test(evoResults123$ConditionalsBoundaryMutator, randoopResults123$ConditionalsBoundaryMutator, paired = TRUE)
+wilcox.test(evoResults123$ConditionalsBoundaryMutator, manualResults123$ConditionalsBoundaryMutator, paired = TRUE)
+wilcox.test(randoopResults123$ConditionalsBoundaryMutator, manualResults123$ConditionalsBoundaryMutator, paired = TRUE)
+```
+
+## Comparing VoidMethodCallMutator Coverage per Tool
+```{r}
+wilcox.test(evoResults123$VoidMethodCallMutator, randoopResults123$VoidMethodCallMutator, paired = TRUE)
+wilcox.test(evoResults123$VoidMethodCallMutator, manualResults123$VoidMethodCallMutator, paired = TRUE)
+wilcox.test(randoopResults123$VoidMethodCallMutator, manualResults123$VoidMethodCallMutator, paired = TRUE)
+```
+
+## Comparing IncrementsMutator Coverage per Tool
+```{r}
+wilcox.test(evoResults123$IncrementsMutator, randoopResults123$IncrementsMutator, paired = TRUE)
+wilcox.test(evoResults123$IncrementsMutator, manualResults123$IncrementsMutator, paired = TRUE)
+wilcox.test(randoopResults123$IncrementsMutator, manualResults123$IncrementsMutator, paired = TRUE)
+```
+
+## Comparing NegateConditionalsMutator Coverage per Tool
+```{r}
+wilcox.test(evoResults123$NegateConditionalsMutator, randoopResults123$NegateConditionalsMutator, paired = TRUE)
+wilcox.test(evoResults123$NegateConditionalsMutator, manualResults123$NegateConditionalsMutator, paired = TRUE)
+wilcox.test(randoopResults123$NegateConditionalsMutator, manualResults123$NegateConditionalsMutator, paired = TRUE)
+```
+
+## Comparing MathMutator Coverage per Tool
+```{r}
+wilcox.test(evoResults123$MathMutator, randoopResults123$MathMutator, paired = TRUE)
+wilcox.test(evoResults123$MathMutator, manualResults123$MathMutator, paired = TRUE)
+wilcox.test(randoopResults123$MathMutator, manualResults123$MathMutator, paired = TRUE)
+```
+  
+## Comparing InvertNegsMutator Coverage per Tool
+```{r}
+evoResults123WithoutNA <- evoResults123 %>% select(InvertNegsMutator) %>% filter(!is.na(InvertNegsMutator))
+#evoResults123WithoutNA
+randoopResults123WithoutNA <- randoopResults123 %>% select(InvertNegsMutator) %>% filter(!is.na(InvertNegsMutator))
+#randoopResults123WithoutNA
+manualResults123WithoutNA <- manualResults123 %>% select(InvertNegsMutator) %>% filter(!is.na(InvertNegsMutator))
+#manualResults123WithoutNA
+
+wilcox.test(evoResults123WithoutNA$InvertNegsMutator, randoopResults123WithoutNA$InvertNegsMutator, paired = TRUE)
+wilcox.test(evoResults123WithoutNA$InvertNegsMutator, manualResults123WithoutNA$InvertNegsMutator, paired = TRUE)
+wilcox.test(randoopResults123WithoutNA$InvertNegsMutator, manualResults123WithoutNA$InvertNegsMutator, paired = TRUE)
+```
+

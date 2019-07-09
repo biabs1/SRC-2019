@@ -1,0 +1,106 @@
+---
+title: 'Exploring Nondeterminism in Tools That Automatically Generate or Analyse Test Suites'
+author: "Beatriz Souza"
+date: "5/14/2019"
+output: html_document
+---
+
+# Installing and loading packages
+```{r}
+install.packages("ggpubr")
+install.packages("ggplot2")
+install.packages("reshape")
+install.packages("reshape2")
+install.packages("dplyr")
+library("ggplot2")
+library("reshape")
+library("reshape2")
+library("ggpubr")
+library("dplyr")
+```
+
+# Reading data
+```{r}
+evo <- read.csv('/home/raul/Desktop/evo1Execution.csv', sep = ",", header = TRUE)
+evo.lineCoverage <- melt(evo, id.var = "Project", measure.var = "LineCoverage")
+evo.mutationCoverage <- melt(evo, id.var = "Project", measure.var = "MutationCoverage")
+
+randoop <- read.csv('/home/raul/Desktop/randoop1Execution.csv', sep = ",", header = TRUE)
+randoop.lineCoverage <- melt(randoop, id.var = "Project", measure.var = "LineCoverage")
+randoop.mutationCoverage <- melt(randoop, id.var = "Project", measure.var = "MutationCoverage")
+
+pitEvo <- read.csv('/home/raul/Desktop/pitSameProjectSameTestSuiteEvo.csv', sep = ",", header = TRUE)
+pitEvo.lineCoverage <- melt(pitEvo, id.var = "Project", measure.var = "LineCoverage")
+pitEvo.mutationCoverage <- melt(pitEvo, id.var = "Project", measure.var = "MutationCoverage")
+
+pitRandoop <- read.csv('/home/raul/Desktop/pitSameProjectSameTestSuiteRandoop.csv', sep = ",", header = TRUE)
+pitRandoop.lineCoverage <- melt(pitRandoop, id.var = "Project", measure.var = "LineCoverage")
+pitRandoop.mutationCoverage <- melt(pitRandoop, id.var = "Project", measure.var = "MutationCoverage")
+
+pitManual <- read.csv('/home/raul/Desktop/pitSameProjectSameTestSuiteManual.csv', sep = ",", header = TRUE)
+pitManual.lineCoverage <- melt(pitManual, id.var = "Project", measure.var = "LineCoverage")
+pitManual.mutationCoverage <- melt(pitManual, id.var = "Project", measure.var = "MutationCoverage")
+```
+
+## Ploting Box-plots 
+#EvoSuite
+```{r}
+par(mfrow = c(1,2))
+    
+ggplot(data = evo.lineCoverage, aes(x=variable, y=value)) +
+  geom_boxplot(aes(fill=Project)) +
+  scale_x_discrete(labels= c("LineCoverage"))
+
+ggplot(data = evo.mutationCoverage, aes(x=variable, y=value)) +
+  geom_boxplot(aes(fill=Project)) +
+  scale_x_discrete(labels= c("MutationCoverage"))
+
+evo %>% group_by(Project) %>% summarise(MutationCoverageAverage = mean(MutationCoverage), MutationCoverageVariation = var(MutationCoverage), MutationCoverageStandardDeviation = sd(MutationCoverage))
+```
+
+# Randoop
+```{r}
+ggplot(data = randoop.lineCoverage, aes(x=variable, y=value)) +
+  geom_boxplot(aes(fill=Project)) +
+  scale_x_discrete(labels= c("LineCoverage"))
+
+ggplot(data = randoop.mutationCoverage, aes(x=variable, y=value)) +
+  geom_boxplot(aes(fill=Project)) +
+  scale_x_discrete(labels= c("MutationCoverage"))
+
+randoop %>% group_by(Project) %>% summarise(LineCoverageAverage = mean(LineCoverage), LineCoverageVariation = var(LineCoverage), LineCoverageStandardDeviation = sd(LineCoverage))
+```
+
+# PIT
+# EvoSuite
+```{r}
+ggplot(data = pitEvo.lineCoverage, aes(x=variable, y=value)) +
+  geom_boxplot(aes(fill=Project)) +
+  scale_x_discrete(labels= c("LineCoverage"))
+
+ggplot(data = pitEvo.mutationCoverage, aes(x=variable, y=value)) +
+  geom_boxplot(aes(fill=Project)) +
+  scale_x_discrete(labels= c("MutationCoverage"))
+```
+
+# Randoop
+```{r}
+ggplot(data = pitRandoop.lineCoverage, aes(x=variable, y=value)) +
+  geom_boxplot(aes(fill=Project)) +
+  scale_x_discrete(labels= c("LineCoverage"))
+
+ggplot(data = pitRandoop.mutationCoverage, aes(x=variable, y=value)) +
+  geom_boxplot(aes(fill=Project)) +
+  scale_x_discrete(labels= c("MutationCoverage"))
+```
+
+# Manual
+```{r}
+ggplot(data = pitManual.lineCoverage, aes(x=variable, y=value)) +
+  geom_boxplot(aes(fill=Project)) +
+  scale_x_discrete(labels= c("LineCoverage"))
+
+ggplot(data = pitManual.mutationCoverage, aes(x=variable, y=value)) +
+  geom_boxplot(aes(fill=Project)) +
+  scale_x_discrete(labels= c("MutationCoverage"))
+```

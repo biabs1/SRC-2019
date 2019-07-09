@@ -1,0 +1,163 @@
+---
+title: "Exploring Correlation Between The Amount of Times a Mutation Type Appears and Its Detection"
+author: "Beatriz Souza"
+date: "6/3/2019"
+output: html_document
+---
+
+## Installing and loading packages
+```{r}
+install.packages("ggpubr")
+install.packages("ggplot2")
+install.packages("reshape")
+install.packages("reshape2")
+library("ggplot2")
+library("reshape")
+library("reshape2")
+library("ggpubr")
+```
+
+## Reading data
+```{r}
+#evoResults1 <- read.csv('/home/beatriz/Desktop/FinaldataSet/evoResultsEvoAvg.csv', sep = ",", header = TRUE)
+#evoResults2 <- read.csv('/home/beatriz/Desktop/FinaldataSet/evoResults2EvoAvg.csv', sep = ",", header = TRUE)
+#evoResults3 <- read.csv('/home/beatriz/Desktop/FinaldataSet/evoResults3EvoAvg.csv', sep = ",", header = TRUE)
+
+#randoopResults1 <- read.csv('/home/beatriz/Desktop/FinaldataSet/randoopResultsRandoopAvg.csv', sep = ",", header = TRUE)
+#randoopResults2 <- read.csv('/home/beatriz/Desktop/FinaldataSet/randoopResults2RandoopAvg.csv', sep = ",", header = TRUE)
+#randoopResults3 <- read.csv('/home/beatriz/Desktop/FinaldataSet/randoopResults3RandoopAvg.csv', sep = ",", header = TRUE)
+
+#manualResults1 <- read.csv('/home/beatriz/Desktop/FinaldataSet/manualSuitesResultsPITAvg.csv', sep = ",", header = TRUE)
+#manualResults2 <- read.csv('/home/beatriz/Desktop/FinaldataSet/manualSuitesResults2PITAvg.csv', sep = ",", header = TRUE)
+#manualResults3 <- read.csv('/home/beatriz/Desktop/FinaldataSet/manualSuitesResults3PITAvg.csv', sep = ",", header = TRUE)
+
+mutantsGenerated <- read.csv('/home/beatriz/Documents/mutantsGenerated.csv', sep = ",", header = TRUE)
+#mutantsGenerated
+
+percentageOfGeneratedMutationsPerProject <- read.csv('/home/beatriz/Desktop/generatedMutantsPerProject.csv', sep = ",", header = TRUE)
+percentageOfGeneratedMutationsPerProject
+
+evoResults <- read.csv('/home/beatriz/Desktop/evoPercentageOfKM.csv', sep = ",", header = TRUE)
+randoopResults <- read.csv('/home/beatriz/Desktop/randoopPercentageOfKM.csv', sep = ",", header = TRUE)
+randoopResults
+manualResults <- read.csv('/home/beatriz/Desktop/manualPercentageOfKM.csv', sep = ",", header = TRUE)
+manualResults
+```
+
+## Merging data
+```{r}
+#evoResults12 <- merge(evoResults1, evoResults2, all = TRUE)
+#evo12
+#evoResults123 <- merge(evoResults12, evoResults3, all = TRUE)
+#evoResults123
+#evoResults123 %>%  write.csv('/home/beatriz/Desktop/evoPercentageOfKM.csv')
+
+#randoopResults12 <- merge(randoopResults1, randoopResults2, all = TRUE)
+#randoopResults12
+#randoopResults123 <- merge(randoopResults12, randoopResults3, all = TRUE)
+#randoopResults123
+#randoopResults123 %>%  write.csv('/home/beatriz/Desktop/randoopPercentageOfKM.csv')
+
+#manualResults12 <- merge(manualResults1, manualResults2, all = TRUE)
+#manualResults12
+#manualResults123 <- merge(manualResults12, manualResults3, all = TRUE)
+#manualResults123
+#manualResults123 %>%  write.csv('/home/beatriz/Desktop/manualPercentageOfKM.csv')
+
+#evoAndRandoopDataSet <- merge(evoResults123, randoopResults123, all = TRUE)
+#completeDataSet <- merge(evoAndRandoopDataSet, manualResults123, all = TRUE)
+#completeDataSet
+```
+
+## Melting data
+```{r}
+mutantsGenerated.m <- melt(mutantsGenerated, id.var = "Font")
+mutantsGenerated.m
+
+ggplot(data=mutantsGenerated.m, aes(x=variable, y=value)) +
+  geom_bar(stat="identity")
+```
+
+# ReturnValsMutator
+```{r}
+par(mfrow = c(2,2))
+plot(evoResults$ReturnValsMutator ~ percentageOfGeneratedMutationsPerProject$ReturnValsMutator)
+plot(randoopResults$ReturnValsMutator ~ percentageOfGeneratedMutationsPerProject$ReturnValsMutator)
+plot(manualResults$ReturnValsMutator ~ percentageOfGeneratedMutationsPerProject$ReturnValsMutator)
+
+cor.test(evoResults$ReturnValsMutator, percentageOfGeneratedMutationsPerProject$ReturnValsMutator, method='spearman')
+cor.test(randoopResults$ReturnValsMutator, percentageOfGeneratedMutationsPerProject$ReturnValsMutator, method='spearman')
+cor.test(manualResults$ReturnValsMutator, percentageOfGeneratedMutationsPerProject$ReturnValsMutator, method='spearman')
+```
+
+# ConditionalsBoundaryMutator
+```{r}
+par(mfrow = c(2,2))
+plot(evoResults$ConditionalsBoundaryMutator ~ percentageOfGeneratedMutationsPerProject$ConditionalsBoundaryMutator)
+plot(randoopResults$ConditionalsBoundaryMutator ~ percentageOfGeneratedMutationsPerProject$ConditionalsBoundaryMutator)
+plot(manualResults$ConditionalsBoundaryMutator ~ percentageOfGeneratedMutationsPerProject$ConditionalsBoundaryMutator)
+
+cor.test(evoResults$ConditionalsBoundaryMutator, percentageOfGeneratedMutationsPerProject$ConditionalsBoundaryMutator, method='spearman')
+cor.test(randoopResults$ConditionalsBoundaryMutator, percentageOfGeneratedMutationsPerProject$ConditionalsBoundaryMutator, method='spearman')
+cor.test(manualResults$ConditionalsBoundaryMutator, percentageOfGeneratedMutationsPerProject$ConditionalsBoundaryMutator, method='spearman')
+```
+
+# VoidMethodCallMutator
+```{r}
+par(mfrow = c(2,2))
+plot(evoResults$VoidMethodCallMutator ~ percentageOfGeneratedMutationsPerProject$VoidMethodCallMutator)
+plot(randoopResults$VoidMethodCallMutator ~ percentageOfGeneratedMutationsPerProject$VoidMethodCallMutator)
+plot(manualResults$VoidMethodCallMutator ~ percentageOfGeneratedMutationsPerProject$VoidMethodCallMutator)
+
+cor.test(evoResults$VoidMethodCallMutator, percentageOfGeneratedMutationsPerProject$VoidMethodCallMutator, method='spearman')
+cor.test(randoopResults$VoidMethodCallMutator, percentageOfGeneratedMutationsPerProject$VoidMethodCallMutator, method='spearman')
+cor.test(manualResults$VoidMethodCallMutator, percentageOfGeneratedMutationsPerProject$VoidMethodCallMutator, method='spearman')
+```
+
+# IncrementsMutator
+```{r}
+par(mfrow = c(2,2))
+plot(evoResults$IncrementsMutator ~ percentageOfGeneratedMutationsPerProject$IncrementsMutator)
+plot(randoopResults$IncrementsMutator ~ percentageOfGeneratedMutationsPerProject$IncrementsMutator)
+plot(manualResults$IncrementsMutator ~ percentageOfGeneratedMutationsPerProject$IncrementsMutator)
+
+cor.test(evoResults$IncrementsMutator, percentageOfGeneratedMutationsPerProject$IncrementsMutator, method='spearman')
+cor.test(randoopResults$IncrementsMutator, percentageOfGeneratedMutationsPerProject$IncrementsMutator, method='spearman')
+cor.test(manualResults$IncrementsMutator, percentageOfGeneratedMutationsPerProject$IncrementsMutator, method='spearman')
+```
+
+# NegateConditionalsMutator
+```{r}
+par(mfrow = c(2,2))
+plot(evoResults$NegateConditionalsMutator ~ percentageOfGeneratedMutationsPerProject$NegateConditionalsMutator)
+plot(randoopResults$NegateConditionalsMutator ~ percentageOfGeneratedMutationsPerProject$NegateConditionalsMutator)
+plot(manualResults$NegateConditionalsMutator ~ percentageOfGeneratedMutationsPerProject$NegateConditionalsMutator)
+
+cor.test(evoResults$IncrementsMutator, percentageOfGeneratedMutationsPerProject$NegateConditionalsMutator, method='spearman')
+cor.test(randoopResults$IncrementsMutator, percentageOfGeneratedMutationsPerProject$NegateConditionalsMutator, method='spearman')
+cor.test(manualResults$IncrementsMutator, percentageOfGeneratedMutationsPerProject$NegateConditionalsMutator, method='spearman')
+```
+
+# MathMutator
+```{r}
+par(mfrow = c(2,2))
+plot(evoResults$MathMutator ~ percentageOfGeneratedMutationsPerProject$MathMutator)
+plot(randoopResults$MathMutator ~ percentageOfGeneratedMutationsPerProject$MathMutator)
+plot(manualResults$MathMutator ~ percentageOfGeneratedMutationsPerProject$MathMutator)
+
+cor.test(evoResults$IncrementsMutator, percentageOfGeneratedMutationsPerProject$MathMutator, method='spearman')
+cor.test(randoopResults$IncrementsMutator, percentageOfGeneratedMutationsPerProject$MathMutator, method='spearman')
+cor.test(manualResults$IncrementsMutator, percentageOfGeneratedMutationsPerProject$MathMutator, method='spearman')
+```
+
+# InvertNegsMutator
+```{r}
+par(mfrow = c(2,2))
+plot(evoResults$InvertNegsMutator ~ percentageOfGeneratedMutationsPerProject$InvertNegsMutator)
+plot(randoopResults$InvertNegsMutator ~ percentageOfGeneratedMutationsPerProject$InvertNegsMutator)
+plot(manualResults$InvertNegsMutator ~ percentageOfGeneratedMutationsPerProject$InvertNegsMutator)
+
+cor.test(evoResults$InvertNegsMutator, percentageOfGeneratedMutationsPerProject$InvertNegsMutator, method='spearman')
+cor.test(randoopResults$InvertNegsMutator, percentageOfGeneratedMutationsPerProject$InvertNegsMutator, method='spearman')
+cor.test(manualResults$InvertNegsMutator, percentageOfGeneratedMutationsPerProject$InvertNegsMutator, method='spearman')
+```

@@ -1,0 +1,40 @@
+---
+title: "Getting The Averages of The Automatically Generated Test Suites Results"
+author: "Beatriz Souza"
+date: "29/05/2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## EvoSuite
+```{r}
+evoResults1 <- read.csv('/home/beatriz/Desktop/evoResultsPITAvg.csv', sep = ",", header = TRUE)
+evoResults2 <- read.csv('/home/beatriz/Desktop/evoResults2PITAvg.csv', sep = ",", header = TRUE)
+evoResults3 <- read.csv('/home/beatriz/Desktop/evoResults3PITAvg.csv', sep = ",", header = TRUE)
+
+evoResultsEvoAvg <- aggregate(evoResults1,  by = list(evoResults1$Project), FUN=mean)
+evoResults2EvoAvg <- aggregate(evoResults2,  by = list(evoResults2$Project), FUN=mean)
+evoResults3EvoAvg <- aggregate(evoResults3,  by = list(evoResults3$Project), FUN=mean)
+
+write.csv(evoResultsEvoAvg, file = '/home/beatriz/Desktop/evoResultsEvoAvg.csv', row.names = FALSE)
+write.csv(evoResults2EvoAvg, file = '/home/beatriz/Desktop/evoResults2EvoAvg.csv', row.names = FALSE)
+write.csv(evoResults3EvoAvg, file = '/home/beatriz/Desktop/evoResults3EvoAvg.csv', row.names = FALSE)
+```
+
+## Randoop
+```{r}
+randoopResults1 <- read.csv('/home/beatriz/Desktop/randoopResultsPITAvg.csv', sep = ",", header = TRUE)
+randoopResults2 <- read.csv('/home/beatriz/Desktop/randoopResults2PITAvg.csv', sep = ",", header = TRUE)
+randoopResults3 <- read.csv('/home/beatriz/Desktop/randoopResults3PITAvg.csv', sep = ",", header = TRUE)
+
+randoopResultsEvoAvg <- aggregate(randoopResults1,  by = list(randoopResults1$Project), FUN=mean)
+randoopResults2EvoAvg <- aggregate(randoopResults2,  by = list(randoopResults2$Project), FUN=mean)
+randoopResults3EvoAvg <- aggregate(randoopResults3,  by = list(randoopResults3$Project), FUN=mean)
+
+write.csv(randoopResultsEvoAvg, file = '/home/beatriz/Desktop/randoopResultsRandoopAvg.csv', row.names = FALSE)
+write.csv(randoopResults2EvoAvg, file = '/home/beatriz/Desktop/randoopResults2RandoopAvg.csv', row.names = FALSE)
+write.csv(randoopResults3EvoAvg, file = '/home/beatriz/Desktop/randoopResults3RandoopAvg.csv', row.names = FALSE)
+```

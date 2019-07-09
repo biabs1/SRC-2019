@@ -1,0 +1,317 @@
+---
+title: "Calculating Correlation Between Mutation Operators"
+author: "Beatriz Souza"
+date: "6/1/2019"
+output: html_document
+---
+
+## Installing and loading packages
+```{r}
+install.packages("ggpubr")
+install.packages("ggplot2")
+install.packages("reshape2")
+library("ggplot2")
+library("reshape2")
+library("ggpubr")
+```
+
+## Reading data
+```{r}
+evoResults1 <- read.csv('/home/beatriz/Desktop/pibicDataSet/evoResults.csv', sep = ",", header = TRUE)
+evoResults2 <- read.csv('/home/beatriz/Desktop/pibicDataSet/evoResults2.csv', sep = ",", header = TRUE)
+evoResults3 <- read.csv('/home/beatriz/Desktop/pibicDataSet/evoResults3.csv', sep = ",", header = TRUE)
+
+randoopResults1 <- read.csv('/home/beatriz/Desktop/pibicDataSet/randoopResults.csv', sep = ",", header = TRUE)
+randoopResults2 <- read.csv('/home/beatriz/Desktop/pibicDataSet/randoopResults2.csv', sep = ",", header = TRUE)
+randoopResults3 <- read.csv('/home/beatriz/Desktop/pibicDataSet/randoopResults3.csv', sep = ",", header = TRUE)
+
+manualResults1 <- read.csv('/home/beatriz/Desktop/pibicDataSet/manualSuitesResults.csv', sep = ",", header = TRUE)
+manualResults2 <- read.csv('/home/beatriz/Desktop/pibicDataSet/manualSuitesResults2.csv', sep = ",", header = TRUE)
+manualResults3 <- read.csv('/home/beatriz/Desktop/pibicDataSet/manualSuitesResults3.csv', sep = ",", header = TRUE)
+```
+
+## Merging data
+```{r}
+evoResults12 <- merge(evoResults1, evoResults2, all = TRUE)
+#evo12
+evoResults123 <- merge(evoResults12, evoResults3, all = TRUE)
+#evoResults123
+
+randoopResults12 <- merge(randoopResults1, randoopResults2, all = TRUE)
+#randoopResults12
+randoopResults123 <- merge(randoopResults12, randoopResults3, all = TRUE)
+#randoopResults123
+
+manualResults12 <- merge(manualResults1, manualResults2, all = TRUE)
+#manualResults12
+manualResults123 <- merge(manualResults12, manualResults3, all = TRUE)
+#manualResults123
+
+evoAndRandoopDataSet <- merge(evoResults123, randoopResults123, all = TRUE)
+completeDataSet <- merge(evoAndRandoopDataSet, manualResults123, all = TRUE)
+#completeDataSet
+```
+
+## ReturnValsMutator
+
+# ReturnValsMutator vs ConditionalsBoundaryMutator
+```{r}
+par(mfrow = c(2,2))
+plot(evoResults123$ConditionalsBoundaryMutator ~ evoResults123$ReturnValsMutator, data = evoResults123)
+plot(randoopResults123$ConditionalsBoundaryMutator ~ randoopResults123$ReturnValsMutator, data = randoopResults123)
+plot(manualResults123$ConditionalsBoundaryMutator ~ manualResults123$ReturnValsMutator, data = manualResults123)
+
+cor.test(evoResults123$ConditionalsBoundaryMutator, evoResults123$ReturnValsMutator, method='spearman')
+cor.test(randoopResults123$ConditionalsBoundaryMutator, randoopResults123$ReturnValsMutator, method='spearman')
+cor.test(manualResults123$ConditionalsBoundaryMutator, manualResults123$ReturnValsMutator, method='spearman')
+```
+
+# ReturnValsMutator vs VoidMethodCallMutator
+```{r}
+par(mfrow = c(2,2))
+plot(evoResults123$VoidMethodCallMutator ~ evoResults123$ReturnValsMutator, data = evoResults123)
+plot(randoopResults123$VoidMethodCallMutator ~ randoopResults123$ReturnValsMutator, data = randoopResults123)
+plot(manualResults123$VoidMethodCallMutator ~ manualResults123$ReturnValsMutator, data = manualResults123)
+
+cor.test(evoResults123$VoidMethodCallMutator, evoResults123$ReturnValsMutator, method='spearman')
+cor.test(randoopResults123$VoidMethodCallMutator, randoopResults123$ReturnValsMutator, method='spearman')
+cor.test(manualResults123$VoidMethodCallMutator, manualResults123$ReturnValsMutator, method='spearman')
+```
+
+# ReturnValsMutator vs IncrementsMutator
+```{r}
+par(mfrow = c(2,2))
+plot(evoResults123$IncrementsMutator ~ evoResults123$ReturnValsMutator, data = evoResults123)
+plot(randoopResults123$IncrementsMutator ~ randoopResults123$ReturnValsMutator, data = randoopResults123)
+plot(manualResults123$IncrementsMutator ~ manualResults123$ReturnValsMutator, data = manualResults123)
+
+cor.test(evoResults123$IncrementsMutator, evoResults123$ReturnValsMutator, method='spearman')
+cor.test(randoopResults123$IncrementsMutator, randoopResults123$ReturnValsMutator, method='spearman')
+cor.test(manualResults123$IncrementsMutator, manualResults123$ReturnValsMutator, method='spearman')
+```
+
+# ReturnValsMutator vs NegateConditionalsMutator
+```{r}
+par(mfrow = c(2,2))
+plot(evoResults123$NegateConditionalsMutator ~ evoResults123$ReturnValsMutator, data = evoResults123)
+plot(randoopResults123$NegateConditionalsMutator ~ randoopResults123$ReturnValsMutator, data = randoopResults123)
+plot(manualResults123$NegateConditionalsMutator ~ manualResults123$ReturnValsMutator, data = manualResults123)
+
+cor.test(evoResults123$NegateConditionalsMutator, evoResults123$ReturnValsMutator, method='spearman')
+cor.test(randoopResults123$NegateConditionalsMutator, randoopResults123$ReturnValsMutator, method='spearman')
+cor.test(manualResults123$NegateConditionalsMutator, manualResults123$ReturnValsMutator, method='spearman')
+```
+
+# ReturnValsMutator vs MathMutator
+```{r}
+par(mfrow = c(2,2))
+plot(evoResults123$MathMutator ~ evoResults123$ReturnValsMutator, data = evoResults123)
+plot(randoopResults123$MathMutator ~ randoopResults123$ReturnValsMutator, data = randoopResults123)
+plot(manualResults123$MathMutator ~ manualResults123$ReturnValsMutator, data = manualResults123)
+
+cor.test(evoResults123$MathMutator, evoResults123$ReturnValsMutator, method='spearman')
+cor.test(randoopResults123$MathMutator, randoopResults123$ReturnValsMutator, method='spearman')
+cor.test(manualResults123$MathMutator, manualResults123$ReturnValsMutator, method='spearman')
+```
+
+# ReturnValsMutator vs InvertNegsMutator
+```{r}
+par(mfrow = c(2,2))
+plot(evoResults123$InvertNegsMutator ~ evoResults123$ReturnValsMutator, data = evoResults123)
+plot(randoopResults123$InvertNegsMutator ~ randoopResults123$ReturnValsMutator, data = randoopResults123)
+plot(manualResults123$InvertNegsMutator ~ manualResults123$ReturnValsMutator, data = manualResults123)
+
+cor.test(evoResults123$InvertNegsMutator, evoResults123$ReturnValsMutator, method='spearman')
+cor.test(randoopResults123$InvertNegsMutator, randoopResults123$ReturnValsMutator, method='spearman')
+cor.test(manualResults123$InvertNegsMutator, manualResults123$ReturnValsMutator, method='spearman')
+```
+
+## ConditionalsBoundaryMutator
+
+# ConditionalsBoundaryMutator vs VoidMethodCallMutator
+```{r}
+par(mfrow = c(2,2))
+plot(evoResults123$VoidMethodCallMutator ~ evoResults123$ConditionalsBoundaryMutator, data = evoResults123)
+plot(randoopResults123$VoidMethodCallMutator ~ randoopResults123$ConditionalsBoundaryMutator, data = randoopResults123)
+plot(manualResults123$VoidMethodCallMutator ~ manualResults123$ConditionalsBoundaryMutator, data = manualResults123)
+
+cor.test(evoResults123$VoidMethodCallMutator, evoResults123$ConditionalsBoundaryMutator, method='spearman')
+cor.test(randoopResults123$VoidMethodCallMutator, randoopResults123$ConditionalsBoundaryMutator, method='spearman')
+cor.test(manualResults123$VoidMethodCallMutator, manualResults123$ConditionalsBoundaryMutator, method='spearman')
+```
+
+# ConditionalsBoundaryMutator vs IncrementsMutator
+```{r}
+par(mfrow = c(2,2))
+plot(evoResults123$IncrementsMutator ~ evoResults123$ConditionalsBoundaryMutator, data = evoResults123)
+plot(randoopResults123$IncrementsMutator ~ randoopResults123$ConditionalsBoundaryMutator, data = randoopResults123)
+plot(manualResults123$IncrementsMutator ~ manualResults123$ConditionalsBoundaryMutator, data = manualResults123)
+
+cor.test(evoResults123$IncrementsMutator, evoResults123$ConditionalsBoundaryMutator, method='spearman')
+cor.test(randoopResults123$IncrementsMutator, randoopResults123$ConditionalsBoundaryMutator, method='spearman')
+cor.test(manualResults123$IncrementsMutator, manualResults123$ConditionalsBoundaryMutator, method='spearman')
+```
+
+# ConditionalsBoundaryMutator vs NegateConditionalsMutator
+```{r}
+par(mfrow = c(2,2))
+plot(evoResults123$NegateConditionalsMutator ~ evoResults123$ConditionalsBoundaryMutator, data = evoResults123)
+plot(randoopResults123$NegateConditionalsMutator ~ randoopResults123$ConditionalsBoundaryMutator, data = randoopResults123)
+plot(manualResults123$NegateConditionalsMutator ~ manualResults123$ConditionalsBoundaryMutator, data = manualResults123)
+
+cor.test(evoResults123$NegateConditionalsMutator, evoResults123$ConditionalsBoundaryMutator, method='spearman')
+cor.test(randoopResults123$NegateConditionalsMutator, randoopResults123$ConditionalsBoundaryMutator, method='spearman')
+cor.test(manualResults123$NegateConditionalsMutator, manualResults123$ConditionalsBoundaryMutator, method='spearman')
+```
+
+# ConditionalsBoundaryMutator vs MathMutator
+```{r}
+par(mfrow = c(2,2))
+plot(evoResults123$MathMutator ~ evoResults123$ConditionalsBoundaryMutator, data = evoResults123)
+plot(randoopResults123$MathMutator ~ randoopResults123$ConditionalsBoundaryMutator, data = randoopResults123)
+plot(manualResults123$MathMutator ~ manualResults123$ConditionalsBoundaryMutator, data = manualResults123)
+
+cor.test(evoResults123$MathMutator, evoResults123$ConditionalsBoundaryMutator, method='spearman')
+cor.test(randoopResults123$MathMutator, randoopResults123$ConditionalsBoundaryMutator, method='spearman')
+cor.test(manualResults123$MathMutator, manualResults123$ConditionalsBoundaryMutator, method='spearman')
+```
+
+# ConditionalsBoundaryMutator vs InvertNegsMutator
+```{r}
+par(mfrow = c(2,2))
+plot(evoResults123$InvertNegsMutator ~ evoResults123$ConditionalsBoundaryMutator, data = evoResults123)
+plot(randoopResults123$InvertNegsMutator ~ randoopResults123$ConditionalsBoundaryMutator, data = randoopResults123)
+plot(manualResults123$InvertNegsMutator ~ manualResults123$ConditionalsBoundaryMutator, data = manualResults123)
+
+cor.test(evoResults123$InvertNegsMutator, evoResults123$ConditionalsBoundaryMutator, method='spearman')
+cor.test(randoopResults123$InvertNegsMutator, randoopResults123$ConditionalsBoundaryMutator, method='spearman')
+cor.test(manualResults123$InvertNegsMutator, manualResults123$ConditionalsBoundaryMutator, method='spearman')
+```
+
+## VoidMethodCallMutator
+
+# VoidMethodCallMutator vs IncrementsMutator
+```{r}
+par(mfrow = c(2,2))
+plot(evoResults123$IncrementsMutator ~ evoResults123$VoidMethodCallMutator, data = evoResults123)
+plot(randoopResults123$IncrementsMutator ~ randoopResults123$VoidMethodCallMutator, data = randoopResults123)
+plot(manualResults123$IncrementsMutator ~ manualResults123$VoidMethodCallMutator, data = manualResults123)
+
+cor.test(evoResults123$IncrementsMutator, evoResults123$VoidMethodCallMutator, method='spearman')
+cor.test(randoopResults123$IncrementsMutator, randoopResults123$VoidMethodCallMutator, method='spearman')
+cor.test(manualResults123$IncrementsMutator, manualResults123$VoidMethodCallMutator, method='spearman')
+```
+
+# VoidMethodCallMutator vs NegateConditionalsMutator
+```{r}
+par(mfrow = c(2,2))
+plot(evoResults123$NegateConditionalsMutator ~ evoResults123$VoidMethodCallMutator, data = evoResults123)
+plot(randoopResults123$NegateConditionalsMutator ~ randoopResults123$VoidMethodCallMutator, data = randoopResults123)
+plot(manualResults123$NegateConditionalsMutator ~ manualResults123$VoidMethodCallMutator, data = manualResults123)
+
+cor.test(evoResults123$NegateConditionalsMutator, evoResults123$VoidMethodCallMutator, method='spearman')
+cor.test(randoopResults123$NegateConditionalsMutator, randoopResults123$VoidMethodCallMutator, method='spearman')
+cor.test(manualResults123$NegateConditionalsMutator, manualResults123$VoidMethodCallMutator, method='spearman')
+```
+
+# VoidMethodCallMutator vs MathMutator
+```{r}
+par(mfrow = c(2,2))
+plot(evoResults123$MathMutator ~ evoResults123$VoidMethodCallMutator, data = evoResults123)
+plot(randoopResults123$MathMutator ~ randoopResults123$VoidMethodCallMutator, data = randoopResults123)
+plot(manualResults123$MathMutator ~ manualResults123$VoidMethodCallMutator, data = manualResults123)
+
+cor.test(evoResults123$MathMutator, evoResults123$VoidMethodCallMutator, method='spearman')
+cor.test(randoopResults123$MathMutator, randoopResults123$VoidMethodCallMutator, method='spearman')
+cor.test(manualResults123$MathMutator, manualResults123$VoidMethodCallMutator, method='spearman')
+```
+
+# VoidMethodCallMutator vs InvertNegsMutator
+```{r}
+par(mfrow = c(2,2))
+plot(evoResults123$InvertNegsMutator ~ evoResults123$VoidMethodCallMutator, data = evoResults123)
+plot(randoopResults123$InvertNegsMutator ~ randoopResults123$VoidMethodCallMutator, data = randoopResults123)
+plot(manualResults123$InvertNegsMutator ~ manualResults123$VoidMethodCallMutator, data = manualResults123)
+
+cor.test(evoResults123$InvertNegsMutator, evoResults123$VoidMethodCallMutator, method='spearman')
+cor.test(randoopResults123$InvertNegsMutator, randoopResults123$VoidMethodCallMutator, method='spearman')
+cor.test(manualResults123$InvertNegsMutator, manualResults123$VoidMethodCallMutator, method='spearman')
+```
+
+## IncrementsMutator
+
+# IncrementsMutator vs NegateConditionalsMutator
+```{r}
+par(mfrow = c(2,2))
+plot(evoResults123$NegateConditionalsMutator ~ evoResults123$IncrementsMutator, data = evoResults123)
+plot(randoopResults123$NegateConditionalsMutator ~ randoopResults123$IncrementsMutator, data = randoopResults123)
+plot(manualResults123$NegateConditionalsMutator ~ manualResults123$IncrementsMutator, data = manualResults123)
+
+cor.test(evoResults123$NegateConditionalsMutator, evoResults123$IncrementsMutator, method='spearman')
+cor.test(randoopResults123$NegateConditionalsMutator, randoopResults123$IncrementsMutator, method='spearman')
+cor.test(manualResults123$NegateConditionalsMutator, manualResults123$IncrementsMutator, method='spearman')
+```
+
+# IncrementsMutator vs MathMutator
+```{r}
+par(mfrow = c(2,2))
+plot(evoResults123$MathMutator ~ evoResults123$IncrementsMutator, data = evoResults123)
+plot(randoopResults123$MathMutator ~ randoopResults123$IncrementsMutator, data = randoopResults123)
+plot(manualResults123$MathMutator ~ manualResults123$IncrementsMutator, data = manualResults123)
+
+cor.test(evoResults123$MathMutator, evoResults123$IncrementsMutator, method='spearman')
+cor.test(randoopResults123$MathMutator, randoopResults123$IncrementsMutator, method='spearman')
+cor.test(manualResults123$MathMutator, manualResults123$IncrementsMutator, method='spearman')
+```
+
+# IncrementsMutator vs InvertNegsMutator
+```{r}
+par(mfrow = c(2,2))
+plot(evoResults123$InvertNegsMutator ~ evoResults123$IncrementsMutator, data = evoResults123)
+plot(randoopResults123$InvertNegsMutator ~ randoopResults123$IncrementsMutator, data = randoopResults123)
+plot(manualResults123$InvertNegsMutator ~ manualResults123$IncrementsMutator, data = manualResults123)
+
+cor.test(evoResults123$InvertNegsMutator, evoResults123$IncrementsMutator, method='spearman')
+cor.test(randoopResults123$InvertNegsMutator, randoopResults123$IncrementsMutator, method='spearman')
+cor.test(manualResults123$InvertNegsMutator, manualResults123$IncrementsMutator, method='spearman')
+```
+
+## NegateConditionalsMutator
+
+# NegateConditionalsMutator vs MathMutator
+```{r}
+par(mfrow = c(2,2))
+plot(evoResults123$MathMutator ~ evoResults123$NegateConditionalsMutator, data = evoResults123)
+plot(randoopResults123$MathMutator ~ randoopResults123$NegateConditionalsMutator, data = randoopResults123)
+plot(manualResults123$MathMutator ~ manualResults123$NegateConditionalsMutator, data = manualResults123)
+
+cor.test(evoResults123$MathMutator, evoResults123$NegateConditionalsMutator, method='spearman')
+cor.test(randoopResults123$MathMutator, randoopResults123$NegateConditionalsMutator, method='spearman')
+cor.test(manualResults123$MathMutator, manualResults123$NegateConditionalsMutator, method='spearman')
+```
+
+# NegateConditionalsMutator vs InvertNegsMutator
+```{r}
+par(mfrow = c(2,2))
+plot(evoResults123$InvertNegsMutator ~ evoResults123$NegateConditionalsMutator, data = evoResults123)
+plot(randoopResults123$InvertNegsMutator ~ randoopResults123$NegateConditionalsMutator, data = randoopResults123)
+plot(manualResults123$InvertNegsMutator ~ manualResults123$NegateConditionalsMutator, data = manualResults123)
+
+cor.test(evoResults123$InvertNegsMutator, evoResults123$NegateConditionalsMutator, method='spearman')
+cor.test(randoopResults123$InvertNegsMutator, randoopResults123$NegateConditionalsMutator, method='spearman')
+cor.test(manualResults123$InvertNegsMutator, manualResults123$NegateConditionalsMutator, method='spearman')
+```
+
+## MathMutator
+
+# MathMutator vs InvertNegsMutator
+```{r}
+par(mfrow = c(2,2))
+plot(evoResults123$InvertNegsMutator ~ evoResults123$MathMutator, data = evoResults123)
+plot(randoopResults123$InvertNegsMutator ~ randoopResults123$MathMutator, data = randoopResults123)
+plot(manualResults123$InvertNegsMutator ~ manualResults123$MathMutator, data = manualResults123)
+
+cor.test(evoResults123$InvertNegsMutator, evoResults123$MathMutator, method='spearman')
+cor.test(randoopResults123$InvertNegsMutator, randoopResults123$MathMutator, method='spearman')
+cor.test(manualResults123$InvertNegsMutator, manualResults123$MathMutator, method='spearman')
+```
