@@ -24,3 +24,9 @@ Comparing the mutation score of test suites from different test generation techn
 ### Mutation Testing Tool
 
 * [PITest's Maven Plugin](http://pitest.org/quickstart/maven/) (version 1.4.5)
+
+### Case Study Applications
+
+* [10 projects]() from the [Apache Commons Repository](https://commons.apache.org/)
+
+  * These projects already have manually written test suites
