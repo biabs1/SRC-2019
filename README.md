@@ -6,8 +6,16 @@ Comparing the mutation score of test suites from different test generation techn
 
 ## Experimental Material
 
-### [EvoSuite's Maven Plugin](http://www.evosuite.org/documentation/maven-plugin/) (version 1.0.6)
+### Test Generation Tools
 
-### [Randoop](https://randoop.github.io/randoop/manual/index.html#getting_randoop) (version 4.1.1)
+#### [EvoSuite's Maven Plugin](http://www.evosuite.org/documentation/maven-plugin/) (version 1.0.6)
+
+* Changed arguments:
+
+  - -Duse_separate_classloader=false (in order to avoid problems with measuring code coverage, otherwise it could cause conflicts with PIT's bytecode instrumentations)
+
+#### [Randoop](https://randoop.github.io/randoop/manual/index.html#getting_randoop) (version 4.1.1)
+
+### Mutation Testing Tool
 
 ### [PITest's Maven Plugin](http://pitest.org/quickstart/maven/) (version 1.4.5)
