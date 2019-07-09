@@ -33,4 +33,6 @@ This page provides the experimental material and the statistical analysis used i
 
   * These projects already have manually written test suites
   
-### [Data Analysis](https://github.com/biabs1/SRC-2019/tree/master/dataAnalysisOutputs)
+### [Data Analysis Scripts](https://github.com/biabs1/SRC-2019/tree/master/scripts/R)
+
+### [Data Analysis Results](https://github.com/biabs1/SRC-2019/tree/master/dataAnalysisOutputs)
