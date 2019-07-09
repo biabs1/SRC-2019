@@ -31,4 +31,4 @@ Comparing the mutation score of test suites from different test generation techn
 
   * These projects already have manually written test suites
   
-### [Data Analysis Results](https://github.com/biabs1/SRC-2019/tree/master/dataAnalysisOutputs)
+### [Data Analysis](https://github.com/biabs1/SRC-2019/tree/master/dataAnalysisOutputs)
