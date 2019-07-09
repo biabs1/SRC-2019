@@ -8,19 +8,19 @@ Comparing the mutation score of test suites from different test generation techn
 
 ### Test Generation Tools
 
-#### [EvoSuite's Maven Plugin](http://www.evosuite.org/documentation/maven-plugin/) (version 1.0.6)
+#### * [EvoSuite's Maven Plugin](http://www.evosuite.org/documentation/maven-plugin/) (version 1.0.6)
 
 * Changed arguments:
 
    * Duse_separate_classloader=false (in order to avoid problems with measuring code coverage, otherwise it could cause conflicts with PIT's bytecode instrumentations)
 
-#### [Randoop](https://randoop.github.io/randoop/manual/index.html#getting_randoop) (version 4.1.1)
+#### * [Randoop](https://randoop.github.io/randoop/manual/index.html#getting_randoop) (version 4.1.1)
 
 * Changed arguments:
 
    * flaky-test-behavior=DISCARD (in order to remove flaky tests)
    * randomseed=x (in order to generate different test suites) - x was randomly generated [here](https://www.random.org/integers/).
 
-### Mutation Testing Tool
+### * Mutation Testing Tool
 
 ### [PITest's Maven Plugin](http://pitest.org/quickstart/maven/) (version 1.4.5)
