@@ -19,7 +19,7 @@ Comparing the mutation score of test suites from different test generation techn
   * Changed arguments:
 
     * flaky-test-behavior=DISCARD (in order to remove flaky tests)
-    * randomseed=x (in order to generate different test suites) - x was randomly generated [here](https://www.random.org/integers/).
+    * randomseed=x (in order to generate different test suites) - for each execution, x was randomly generated [here](https://www.random.org/integers/).
 
 ### Mutation Testing Tool
 
