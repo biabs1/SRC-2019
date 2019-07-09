@@ -7,3 +7,7 @@ Comparing the mutation score of test suites from different test generation techn
 ## Experimental Material
 
 ### [EvoSuite's Maven Plugin](http://www.evosuite.org/documentation/maven-plugin/) (version 1.0.6)
+
+### [Randoop](https://randoop.github.io/randoop/manual/index.html#getting_randoop) (version 4.1.1)
+
+### [PITest's Maven Plugin](http://pitest.org/quickstart/maven/) (version 1.4.5)
