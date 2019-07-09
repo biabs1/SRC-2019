@@ -12,9 +12,14 @@ Comparing the mutation score of test suites from different test generation techn
 
 * Changed arguments:
 
-  - -Duse_separate_classloader=false (in order to avoid problems with measuring code coverage, otherwise it could cause conflicts with PIT's bytecode instrumentations)
+   * Duse_separate_classloader=false (in order to avoid problems with measuring code coverage, otherwise it could cause conflicts with PIT's bytecode instrumentations)
 
 #### [Randoop](https://randoop.github.io/randoop/manual/index.html#getting_randoop) (version 4.1.1)
+
+* Changed arguments:
+
+   * flaky-test-behavior=DISCARD (in order to remove flaky tests)
+   * randomseed=x (in order to generate different test suites) - x was randomly generated [here](https://www.random.org/integers/).
 
 ### Mutation Testing Tool
 
