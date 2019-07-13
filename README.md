@@ -26,7 +26,7 @@ This page provides the experimental material and the statistical analysis used i
 
 ### Case Study Applications
 
- We used 10 projects from the [Apache Commons Repository](https://commons.apache.org/). These projects already have manually written test suites. 
+ We used 10 projects from the [Apache Commons Repository](https://commons.apache.org/). These projects already have developer-manually written test suites. 
  
 ### [Applications with regression test suites for each test generation technique](https://drive.google.com/drive/folders/1YKnmeo4bS1fDsexGk2QYRfCl74HFf5ws?usp=sharing)
   We manually removed all the tests that did not pass.
